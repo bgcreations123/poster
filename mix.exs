@@ -19,7 +19,7 @@ defmodule Poster.Mixfile do
   def application do
     [mod: {Poster, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :scrivener, :scrivener_ecto]]
+                    :phoenix_ecto, :postgrex, :number, :scrivener, :scrivener_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,6 +38,7 @@ defmodule Poster.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
+     {:number, "~> 0.5.1"},
      {:scrivener, "~> 2.0"},
      {:scrivener_ecto, "~> 1.0"}]
   end

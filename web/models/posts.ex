@@ -5,6 +5,7 @@ defmodule Poster.Posts do
   alias Poster.Repo
 
   schema "posts" do
+    field :status, :boolean
     field :title, :string
     field :content, :string
     field :price, :float
@@ -19,7 +20,7 @@ defmodule Poster.Posts do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:categories_id, :title, :content, :price])
+    |> cast(params, [:categories_id, :status, :title, :content, :price])
     |> validate_required([:categories_id, :title, :content, :price])
   end
 

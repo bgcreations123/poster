@@ -1,6 +1,7 @@
 <h2>New category</h2>
 
 <%= render "form.html",
+           categories: @categories,
            changeset: @changeset,
            action: categories_path(@conn, :create) %>
 

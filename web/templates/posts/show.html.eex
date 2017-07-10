@@ -19,10 +19,12 @@
 
     <li>
         <strong>Price:</strong>
-        <%= @post.price %>
+        <%= Number.Currency.number_to_currency(@post.price) %>
     </li>
 
 </ul>
 
-<%= link "Edit", to: posts_path(@conn, :edit, @post) %>
 <%= link "Back", to: posts_path(@conn, :index) %>
+<span class="pull-right">
+    <%= link "Edit", to: posts_path(@conn, :edit, @post) %>
+</span>

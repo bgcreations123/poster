@@ -1,5 +1,6 @@
 defmodule Poster.PostsController do
   use Poster.Web, :controller
+  use Number
 
   alias Poster.Posts
   alias Poster.Categories
@@ -10,10 +11,10 @@ defmodule Poster.PostsController do
   def index(conn, params) do
     page = Posts
            |> QueryFilter.filter(params, [:categories_id])
-           #|> Repo.all
            |> Repo.paginate(params)
 
-    categories = Repo.all Categories
+    categories = from(c in Categories, where: [parent_id: "null", status: true])
+                 |> Repo.all()
 
     render conn, "index.html", posts: page.entries, page: page, categories: categories
   end
@@ -71,11 +72,6 @@ defmodule Poster.PostsController do
       conn
       |> put_flash(:info, "Post deleted successfully.")
       |> redirect(to: posts_path(conn, :index))
-    end
-
-    def filter(conn, %{"id" => id}) do
-      posts = Posts.get_and_preload_category(id)
-      render conn, "index.html", posts: posts
     end
 
     defp load_categories(conn, _) do

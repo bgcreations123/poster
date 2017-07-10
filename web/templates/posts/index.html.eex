@@ -16,7 +16,6 @@
     <thead>
     <tr>
         <th>Title</th>
-        <th>Description</th>
         <th>Price</th>
 
         <th></th>
@@ -26,8 +25,7 @@
     <%= for post <- @posts do %>
     <tr>
         <td><%= post.title %></td>
-        <td><%= post.content %></td>
-        <td><%= post.price %></td>
+        <td><%= Number.Currency.number_to_currency(post.price) %></td>
 
         <td class="text-right">
             <%= link "Show", to: posts_path(@conn, :show, post), class: "btn btn-default btn-xs" %>

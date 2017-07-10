@@ -3,8 +3,8 @@ defmodule Poster.Repo.Migrations.CreateCategories do
 
   def change do
     create table(:categories) do
-      add :parent_id, :string
-      add :category_id, :int
+      add :parent_id, :string, default: "null"
+      add :status, :boolean, default: true
       add :name, :string
       add :description, :text
 

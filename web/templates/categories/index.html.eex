@@ -1,15 +1,22 @@
-<h2>Listing Categories</h2>
+<h2>Categories</h2>
 
-<%= link "New category", to: categories_path(@conn, :new) %>
+<%= link "New Category", to: categories_path(@conn, :new) %>
+<!--<br /><%= link "New Sub-Category", to: "#" %>-->
+
 <div class="pull-right">
-    <%= link "New Sub-Category", to: categories_path(@conn, :new, @categories) %>
+    <%= form_for @conn, categories_path(@conn, :index), [method: :get, as: :filter], fn f -> %>
+        <div class="col-md-8">
+            <%= select(f, :parent_id, @categories |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "All Categories !") %>
+        </div>
+
+        <%= submit "Submit", class: "btn btn-primary" %>
+    <% end %>
 </div>
 
 <table class="table">
     <thead>
     <tr>
         <th>Name</th>
-        <th>Description</th>
 
         <th></th>
     </tr>
@@ -18,14 +25,30 @@
     <%= for category <- @categories do %>
     <tr>
         <td><%= category.name %></td>
-        <td><%= category.description %></td>
 
-        <td class="text-right">
-            <%= link "Show", to: categories_path(@conn, :show, category), class: "btn btn-default btn-xs" %>
-            <%= link "Edit", to: categories_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
-            <%= link "Delete", to: categories_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
-        </td>
+        <%= if category.status == true do %>
+            <td class="text-right">
+                <%= link "Show", to: categories_path(@conn, :show, category), class: "btn btn-default btn-xs" %>
+                <%= link "Edit", to: categories_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
+                <%= link "Mute", to: categories_path(@conn, :mute, category), method: :post, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+            </td>
+        <% else %>
+            <td class="text-right">
+                <%= link "Revert", to: categories_path(@conn, :revert, category), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
+                <%= link "Delete", to: categories_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure of permanent deleting?"], class: "btn btn-danger btn-xs" %>
+            </td>
+        <% end %>
     </tr>
     <% end %>
     </tbody>
 </table>
+
+<%= if @page.page_number > 1 do %>
+<%= link "<\ Prev Page", to: categories_path(@conn, :index, page: @page.page_number - 1) %>
+<% end %>
+
+<span class="pull-right">
+    <%= if @page.page_number < @page.total_pages do %>
+        <%= link "Next Page >", to: categories_path(@conn, :index, page: @page.page_number + 1) %>
+    <% end %>
+</span>

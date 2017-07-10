@@ -2,10 +2,16 @@ defmodule Poster.CategoriesController do
   use Poster.Web, :controller
 
   alias Poster.Categories
+  alias Poster.QueryFilter
 
-  def index(conn, _params) do
-    categories = Repo.all Categories
-    render conn, "index.html", categories: categories
+  plug :load_categories when action in [:new, :create, :edit, :update]
+
+  def index(conn, params) do
+    page = Categories
+           |> QueryFilter.filter(params, [:parent_id])
+           |> Repo.paginate(params)
+
+    render conn, "index.html", categories: page.entries, page: page
   end
 
   def new(conn, _params) do
@@ -59,7 +65,35 @@ defmodule Poster.CategoriesController do
     Repo.delete!(category)
 
     conn
-    |> put_flash(:info, "Category deleted successfully.")
+    |> put_flash(:error, "Category Permanently deleted successfully.")
     |> redirect(to: categories_path(conn, :index))
+  end
+
+  def revert(conn, %{"id" => id}) do
+    from(c in Categories, where: c.id == ^id)
+    |> Repo.update_all(set: [status: true])
+
+    conn
+    |> put_flash(:info, "Category reverted successfully.")
+    |> redirect(to: categories_path(conn, :index))
+  end
+
+  def mute(conn, %{"id" => id}) do
+    from(c in Categories, where: c.id == ^id)
+    |> Repo.update_all(set: [status: false])
+
+    conn
+    |> put_flash(:error, "Category deleted successfully.")
+    |> redirect(to: categories_path(conn, :index))
+  end
+
+  defp load_categories(conn, _) do
+    query =
+      Categories
+      |> Categories.alphabetical
+      |> Categories.names_and_ids
+
+    categories = Repo.all query
+    assign(conn, :categories, categories)
   end
 end

@@ -19,6 +19,8 @@ defmodule Poster.Router do
     get "/", PageController, :index
     resources "/posts", PostsController
     resources "/categories", CategoriesController
+    post "/categories/:id/mute", CategoriesController, :mute
+    post "/categories/:id/revert", CategoriesController, :revert
   end
 
   # Other scopes may use custom stacks.

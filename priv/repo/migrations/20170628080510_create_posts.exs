@@ -4,6 +4,7 @@ defmodule Poster.Repo.Migrations.CreatePosts do
   def change do
     create table(:posts) do
       add :categories_id, :int
+      add :status, :boolean, default: true
       add :title, :string
       add :content, :text
       add :price, :float
