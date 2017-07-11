@@ -11,21 +11,18 @@
 # and so on) as they will fail if something goes wrong.
 defmodule Poster.DatabaseSeeder do
   alias Poster.Repo
-  alias Poster.Categories
+  alias Poster.AdType
 
   [
-    %Categories{
-      parent_id: "null",
-      name: "Cars",
+    %AdType{
+      name: "Vehicles",
       description: "Vehicles and auto mobiles"
     },
-    %Categories{
-      parent_id: "null",
+    %AdType{
       name: "Real Estate",
       description: "Habitable homes for daily livelihood"
     },
-    %Categories{
-      parent_id: "null",
+    %AdType{
       name: "Hobies, Art & Sport",
       description: "Habbits and talets for sale as goods or services"
     }

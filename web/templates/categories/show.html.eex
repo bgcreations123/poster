@@ -3,6 +3,16 @@
 <ul>
 
     <li>
+        <strong>Ad Type:</strong>
+        <%= @category.ad_type.name %>
+    </li>
+
+    <li>
+        <strong>Category:</strong>
+        <%= @category.parent_id %>
+    </li>
+
+    <li>
         <strong>Name:</strong>
         <%= @category.name %>
     </li>

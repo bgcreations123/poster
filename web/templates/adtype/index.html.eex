@@ -1,0 +1,33 @@
+<h2>Ads Type</h2>
+
+<%= link "New Adtype", to: adtype_path(@conn, :new) %>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for adtype <- @adtype do %>
+        <tr>
+            <td><%= adtype.name %></td>
+
+            <%= if adtype.status == true do %>
+                <td class="text-right">
+                    <%= link "Show", to: adtype_path(@conn, :show, adtype), class: "btn btn-default btn-xs" %>
+                    <%= link "Edit", to: adtype_path(@conn, :edit, adtype), class: "btn btn-default btn-xs" %>
+                    <%= link "Mute", to: adtype_path(@conn, :mute, adtype), method: :post, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+                </td>
+            <% else %>
+                <td class="text-right">
+                    <%= link "Activate", to: adtype_path(@conn, :revert, adtype), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
+                    <%= link "Delete", to: adtype_path(@conn, :delete, adtype), method: :delete, data: [confirm: "Are you sure of permanent deleting?"], class: "btn btn-danger btn-xs" %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

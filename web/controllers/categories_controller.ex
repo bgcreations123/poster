@@ -2,8 +2,10 @@ defmodule Poster.CategoriesController do
   use Poster.Web, :controller
 
   alias Poster.Categories
+  alias Poster.AdType
   alias Poster.QueryFilter
 
+  plug :load_adtypes when action in [:new, :create, :edit, :update]
   plug :load_categories when action in [:new, :create, :edit, :update]
 
   def index(conn, params) do
@@ -11,7 +13,9 @@ defmodule Poster.CategoriesController do
            |> QueryFilter.filter(params, [:parent_id])
            |> Repo.paginate(params)
 
-    render conn, "index.html", categories: page.entries, page: page
+    adtypes = Repo.all AdType
+
+    render conn, "index.html", adtypes: adtypes, categories: page.entries, page: page
   end
 
   def new(conn, _params) do
@@ -33,7 +37,7 @@ defmodule Poster.CategoriesController do
   end
 
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Categories, id)
+    category = Categories.get_and_preload_adtype(id)
     render(conn, "show.html", category: category)
   end
 
@@ -87,6 +91,16 @@ defmodule Poster.CategoriesController do
     |> redirect(to: categories_path(conn, :index))
   end
 
+  defp load_adtypes(conn, _) do
+    query =
+      AdType
+      |> AdType.alphabetical
+      |> AdType.names_and_ids
+
+    adtypes = Repo.all query
+    assign(conn, :adtypes, adtypes)
+  end
+
   defp load_categories(conn, _) do
     query =
       Categories
@@ -96,4 +110,5 @@ defmodule Poster.CategoriesController do
     categories = Repo.all query
     assign(conn, :categories, categories)
   end
+
 end

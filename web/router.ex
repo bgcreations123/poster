@@ -17,10 +17,15 @@ defmodule Poster.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/posts", PostsController
     resources "/categories", CategoriesController
     post "/categories/:id/mute", CategoriesController, :mute
     post "/categories/:id/revert", CategoriesController, :revert
+    resources "/adtype", AdtypeController
+    post "/adtype/:id/mute", AdtypeController, :mute
+    post "/adtype/:id/revert", AdtypeController, :revert
+    resources "/posts", PostsController
+    post "/posts/:id/mute", PostsController, :mute
+    post "/posts/:id/revert", PostsController, :revert
   end
 
   # Other scopes may use custom stacks.

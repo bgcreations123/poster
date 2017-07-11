@@ -1,0 +1,8 @@
+<h2>Edit Adtype</h2>
+
+<%= render "form.html",
+            adtype: @adtype,
+            changeset: @changeset,
+            action: adtype_path(@conn, :update, @adtype) %>
+
+<%= link "Back", to: adtype_path(@conn, :index) %>

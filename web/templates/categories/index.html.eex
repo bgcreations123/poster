@@ -6,7 +6,7 @@
 <div class="pull-right">
     <%= form_for @conn, categories_path(@conn, :index), [method: :get, as: :filter], fn f -> %>
         <div class="col-md-8">
-            <%= select(f, :parent_id, @categories |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "All Categories !") %>
+            <%= select(f, :adtype_id, @adtypes |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "All Ads Types !") %>
         </div>
 
         <%= submit "Submit", class: "btn btn-primary" %>
@@ -34,7 +34,7 @@
             </td>
         <% else %>
             <td class="text-right">
-                <%= link "Revert", to: categories_path(@conn, :revert, category), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
+                <%= link "Activate", to: categories_path(@conn, :revert, category), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
                 <%= link "Delete", to: categories_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure of permanent deleting?"], class: "btn btn-danger btn-xs" %>
             </td>
         <% end %>

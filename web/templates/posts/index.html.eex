@@ -27,11 +27,18 @@
         <td><%= post.title %></td>
         <td><%= Number.Currency.number_to_currency(post.price) %></td>
 
-        <td class="text-right">
-            <%= link "Show", to: posts_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
-            <%= link "Edit", to: posts_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
-            <%= link "Delete", to: posts_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
-        </td>
+        <%= if post.status == true do %>
+            <td class="text-right">
+                <%= link "Show", to: posts_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
+                <%= link "Edit", to: posts_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
+                <%= link "Mute", to: posts_path(@conn, :mute, post), method: :post, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+            </td>
+        <% else %>
+            <td class="text-right">
+                <%= link "Activate", to: posts_path(@conn, :revert, post), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
+                <%= link "Delete", to: posts_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure of permanent deleting?"], class: "btn btn-danger btn-xs" %>
+            </td>
+        <% end %>
     </tr>
     <% end %>
     </tbody>

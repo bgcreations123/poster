@@ -1,0 +1,18 @@
+<h2>Show Adtype</h2>
+
+<ul>
+
+    <li>
+        <strong>Name:</strong>
+        <%= @adtype.name %>
+    </li>
+
+    <li>
+        <strong>Description:</strong>
+        <%= @adtype.description %>
+    </li>
+
+</ul>
+
+<%= link "Edit", to: adtype_path(@conn, :edit, @adtype) %>
+<%= link "Back", to: adtype_path(@conn, :index) %>

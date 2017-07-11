@@ -11,6 +11,11 @@ defmodule Poster.PostsController do
   def index(conn, params) do
     page = Posts
            |> QueryFilter.filter(params, [:categories_id])
+
+    page = from(p in page,
+           join: c in assoc(p, :categories),
+           where: c.status == true,
+           preload: [categories: c])
            |> Repo.paginate(params)
 
     categories = from(c in Categories, where: [parent_id: "null", status: true])
@@ -70,7 +75,25 @@ defmodule Poster.PostsController do
       Repo.delete!(post)
 
       conn
-      |> put_flash(:info, "Post deleted successfully.")
+      |> put_flash(:info, "Post deleted permanently successfully.")
+      |> redirect(to: posts_path(conn, :index))
+    end
+
+    def revert(conn, %{"id" => id}) do
+      from(p in Posts, where: p.id == ^id)
+      |> Repo.update_all(set: [status: true])
+
+      conn
+      |> put_flash(:info, "Post reverted successfully.")
+      |> redirect(to: posts_path(conn, :index))
+    end
+
+    def mute(conn, %{"id" => id}) do
+      from(p in Posts, where: p.id == ^id)
+      |> Repo.update_all(set: [status: false])
+
+      conn
+      |> put_flash(:error, "Post deleted successfully.")
       |> redirect(to: posts_path(conn, :index))
     end
 
