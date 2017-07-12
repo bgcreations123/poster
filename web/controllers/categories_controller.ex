@@ -10,7 +10,7 @@ defmodule Poster.CategoriesController do
 
   def index(conn, params) do
     page = Categories
-           |> QueryFilter.filter(params, [:parent_id])
+           |> QueryFilter.filter(params, [:adtype_id])
            |> Repo.paginate(params)
 
     adtypes = Repo.all AdType
@@ -38,6 +38,7 @@ defmodule Poster.CategoriesController do
 
   def show(conn, %{"id" => id}) do
     category = Categories.get_and_preload_adtype(id)
+
     render(conn, "show.html", category: category)
   end
 
