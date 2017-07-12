@@ -2,7 +2,9 @@
 
 <%= render "form.html",
            changeset: @changeset,
+           adtypes: @adtypes,
            categories: @categories,
+           locations: @locations,
            action: posts_path(@conn, :create) %>
 
 <%= link "Back", to: posts_path(@conn, :index) %>

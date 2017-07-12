@@ -17,12 +17,26 @@ defmodule Poster.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
+    #Search
+    post "/search", SearchController, :index
+
+    #Categories
     resources "/categories", CategoriesController
     post "/categories/:id/mute", CategoriesController, :mute
     post "/categories/:id/revert", CategoriesController, :revert
+
+    #Ad Types
     resources "/adtype", AdtypeController
     post "/adtype/:id/mute", AdtypeController, :mute
     post "/adtype/:id/revert", AdtypeController, :revert
+
+    #Locations
+    resources "/locations", LocationsController
+    post "/locations/:id/mute", LocationsController, :mute
+    post "/locations/:id/revert", LocationsController, :revert
+
+    #Posts
     resources "/posts", PostsController
     post "/posts/:id/mute", PostsController, :mute
     post "/posts/:id/revert", PostsController, :revert

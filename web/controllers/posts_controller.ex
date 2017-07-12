@@ -3,7 +3,9 @@ defmodule Poster.PostsController do
   use Number
 
   alias Poster.Posts
+  alias Poster.AdType
   alias Poster.Categories
+  alias Poster.Locations
   alias Poster.QueryFilter
 
   plug :load_categories when action in [:new, :create, :edit, :update]
@@ -22,11 +24,15 @@ defmodule Poster.PostsController do
                  |> Repo.all()
 
     render conn, "index.html", posts: page.entries, page: page, categories: categories
+
   end
 
   def new(conn, _params) do
+    locations = Repo.all Locations
+    adtypes = Repo.all AdType
+
     changeset = Posts.changeset(%Posts{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", locations: locations, adtypes: adtypes, changeset: changeset)
   end
 
   def create(conn, %{"posts" => post_params}) do
@@ -49,8 +55,11 @@ defmodule Poster.PostsController do
 
     def edit(conn, %{"id" => id}) do
       post = Repo.get!(Posts, id)
+      locations = Repo.all Locations
+      adtypes = Repo.all AdType
+
       changeset = Posts.changeset(post)
-      render(conn, "edit.html", post: post, changeset: changeset)
+      render(conn, "edit.html", post: post, locations: locations, adtypes: adtypes, changeset: changeset)
     end
 
     def update(conn, %{"id" => id, "posts" => post_params}) do
@@ -75,7 +84,7 @@ defmodule Poster.PostsController do
       Repo.delete!(post)
 
       conn
-      |> put_flash(:info, "Post deleted permanently successfully.")
+      |> put_flash(:error, "Post deleted permanently successfully.")
       |> redirect(to: posts_path(conn, :index))
     end
 

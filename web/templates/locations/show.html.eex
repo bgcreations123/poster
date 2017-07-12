@@ -1,0 +1,18 @@
+<h2>Show Location</h2>
+
+<ul>
+
+    <li>
+        <strong>Name:</strong>
+        <%= @location.name %>
+    </li>
+
+    <li>
+        <strong>Description:</strong>
+        <%= @location.description %>
+    </li>
+
+</ul>
+
+<%= link "Edit", to: locations_path(@conn, :edit, @location) %>
+<%= link "Back", to: locations_path(@conn, :index) %>

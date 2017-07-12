@@ -1,0 +1,7 @@
+<h2>New Location</h2>
+
+<%= render "form.html",
+           changeset: @changeset,
+           action: locations_path(@conn, :create) %>
+
+<%= link "Back", to: locations_path(@conn, :index) %>

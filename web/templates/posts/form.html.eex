@@ -7,6 +7,12 @@
     <% end %>
 
     <div class="form-group">
+        <%= label f, :adtype_id, gettext("Ad Type"), class: "control-label" %>
+        <%= select f, :adtype_id, @adtypes |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "Choose an Ad Type" %>
+        <%= error_tag f, :adtype_id %>
+    </div>
+
+    <div class="form-group">
         <%= label f, :categories_id, gettext("Category"), class: "control-label" %>
         <%= select f, :categories_id, @categories, class: "form-control", prompt: "Choose a category" %>
         <%= error_tag f, :categories_id %>
@@ -22,6 +28,12 @@
         <%= label f, :content, class: "control-label" %>
         <%= textarea f, :content, class: "form-control" %>
         <%= error_tag f, :content %>
+    </div>
+
+    <div class="form-group">
+        <%= label f, :location_id, gettext("Location"), class: "control-label" %>
+        <%= select f, :location_id, @locations |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "Choose the location" %>
+        <%= error_tag f, :location_id %>
     </div>
 
     <div class="form-group">

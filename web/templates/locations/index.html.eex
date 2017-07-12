@@ -1,0 +1,33 @@
+<h2>Locations</h2>
+
+<%= link "New Location", to: locations_path(@conn, :new) %>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for location <- @locations do %>
+        <tr>
+            <td><%= location.name %></td>
+
+            <%= if location.status == true do %>
+                <td class="text-right">
+                    <%= link "Show", to: locations_path(@conn, :show, location), class: "btn btn-default btn-xs" %>
+                    <%= link "Edit", to: locations_path(@conn, :edit, location), class: "btn btn-default btn-xs" %>
+                    <%= link "Mute", to: locations_path(@conn, :mute, location), method: :post, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+                </td>
+            <% else %>
+                <td class="text-right">
+                    <%= link "Activate", to: locations_path(@conn, :revert, location), method: :post, data: [confirm: "Are you sure of reverting?"], class: "btn btn-primary btn-xs" %>
+                    <%= link "Delete", to: locations_path(@conn, :delete, location), method: :delete, data: [confirm: "Are you sure of permanent deleting?"], class: "btn btn-danger btn-xs" %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

@@ -19,6 +19,7 @@
             <li><%= link "Home", to: page_path(@conn, :index), class: "btn btn-default btn-xs" %></li>
             <li><%= link "AdTypes", to: adtype_path(@conn, :index), class: "btn btn-default btn-xs" %></li>
             <li><%= link "Categories", to: categories_path(@conn, :index), class: "btn btn-default btn-xs" %></li>
+            <li><%= link "Locations", to: locations_path(@conn, :index), class: "btn btn-default btn-xs" %></li>
             <li><%= link "Posts", to: posts_path(@conn, :index), class: "btn btn-default btn-xs" %></li>
           </ul>
         </nav>
@@ -26,13 +27,31 @@
         <span class="logo"></span>
 
         <div class="col-lg-12" style="padding-right: 0; margin-right: 0;">
-          <%= form_for @conn, posts_path(@conn, :index), [as: :search, method: "get"], fn f -> %>
-          <div class="pull-right col-lg-4 input-group">
-            <%= text_input f, :search, [class: "form-control", placeholder: "Search..."] %>
-            <span class="input-group-btn">
-              <%= submit "Submit", class: "btn btn-primary" %>
-            </span>
-          </div>
+          <%= form_for @conn, search_path(@conn, :index), [name: :search], fn f -> %>
+            <!--<div class="pull-right col-lg-4 input-group">-->
+              <!--<%= text_input f, :search, [class: "form-control", placeholder: "Search..."] %>-->
+              <!--<span class="input-group-btn">-->
+                <!--<%= submit "Submit", class: "btn btn-primary" %>-->
+              <!--</span>-->
+            <!--</div>-->
+            <div class="pull-right col-lg-6">
+              <div class="input-group">
+
+                <!--<span class="input-group-addon">-->
+                  <!--<%= #select f, :category_id, @categories |> Enum.map(&{&1.name, &1.id}), [class: "form-group-sm", prompt: "Choose the Category"] %>-->
+                <!--</span>-->
+
+                <!--<span class="input-group-addon">-->
+                  <!--<%= #select f, :location_id, @locations |> Enum.map(&{&1.name, &1.id}), [class: "form-group-sm", prompt: "Choose the location"] %>-->
+                <!--</span>-->
+
+                <%= text_input f, :query, [class: "form-control", placeholder: "Search..."] %>
+                <span class="input-group-btn">
+                  <%= submit "Submit", class: "btn btn-primary" %>
+                </span>
+
+              </div>
+            </div>
           <% end %>
         </div>
 
