@@ -1,1 +1,7 @@
 showing results
+
+<%= for result <- @results do %>
+
+    <%= @result.id %>
+
+<% end %>

@@ -5,7 +5,13 @@ defmodule Poster.SearchController do
   alias Poster.Posts
 
   def index(conn, %{"search" => %{"query" => query}}) do
-    results = Repo.all Posts
+#   like_term = "%#{search["query"]}%"
+#    searchQuery = from p in Post,
+#    where: (like(p.name, like_term) or like(s.body, like_term))
+
+    results = from(p in Posts, where: p.title == ^query)
+              |> Repo.all
+
     render conn, "index.html", results: results
   end
 

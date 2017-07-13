@@ -7,11 +7,6 @@
         <%= @location.name %>
     </li>
 
-    <li>
-        <strong>Description:</strong>
-        <%= @location.description %>
-    </li>
-
 </ul>
 
 <%= link "Edit", to: locations_path(@conn, :edit, @location) %>
