@@ -3,8 +3,18 @@
 <ul>
 
     <li>
+        <strong>Ad Type:</strong>
+        <%= @post.ad_type.name %>
+    </li>
+
+    <li>
         <strong>Category:</strong>
         <%= @post.categories.name %>
+    </li>
+
+    <li>
+        <strong>Location:</strong>
+        <%= @post.locations.name %>
     </li>
 
     <li>

@@ -49,7 +49,7 @@ defmodule Poster.PostsController do
   end
 
     def show(conn, %{"id" => id}) do
-      post = Posts.get_and_preload_category(id)
+      post = Posts.get_and_preload_category_and_adtypes(id)
       render(conn, "show.html", post: post)
     end
 

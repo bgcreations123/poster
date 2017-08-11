@@ -14,8 +14,8 @@ defmodule Poster.AdType do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:adtype_id, :status, :name, :description])
-    |> validate_required([:adtype_id, :name, :description])
+    |> cast(params, [:status, :name, :description])
+    |> validate_required([:name, :description])
   end
 
   def alphabetical(query) do

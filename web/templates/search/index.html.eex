@@ -1,7 +1,7 @@
-showing results
+showing results <br />
 
 <%= for result <- @results do %>
 
-    <%= @result.id %>
+    <%= result.id %> <br />
 
 <% end %>

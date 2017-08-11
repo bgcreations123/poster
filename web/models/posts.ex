@@ -27,10 +27,14 @@ defmodule Poster.Posts do
     |> validate_required([:categories_id, :title, :content, :price])
   end
 
-  def get_and_preload_category(id) do
+  def get_and_preload_category_and_adtypes(id) do
     from(q in __MODULE__, where: q.id == ^id,
     join: c in assoc(q, :categories),
-    preload: [categories: c])
+    join: l in assoc(q, :locations),
+    join: t in assoc(q, :ad_type),
+    preload: [categories: c],
+    preload: [locations: l],
+    preload: [ad_type: t])
     |> Repo.one!()
   end
 end
